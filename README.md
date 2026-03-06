@@ -8,7 +8,7 @@ A real-time interactive ecosystem simulation built from scratch in core Java (Sw
 
 ## 🎥 Ecosystem in Action
 
-_(Add your GIF here! Show the tree growing, then switch to Windy mode to show the sine-wave physics, and finally click Autumn to show the leaf particle system falling.)_
+![Simulation Demo](SmartTreeGif.gif)
 
 ## ✨ Key Features & Mechanics
 
