@@ -16,6 +16,8 @@ public class TreeSimulator extends JPanel implements ActionListener {
     List<Leaf> fallingLeaves = new ArrayList<>();
     boolean spawnLeaves = false;
 
+    Bird aiBird = new Bird(-50, 150);
+
     class Leaf {
 
         double x, y, vx, vy;
@@ -27,6 +29,45 @@ public class TreeSimulator extends JPanel implements ActionListener {
             this.vy = Math.random() * 2 + 1;
             this.vx = (Math.random() - .5) * 2;
             this.color = new Color(200 + (int) (Math.random() * 55), 100 + (int) (Math.random() * 50), 20, 200);
+        }
+    }
+
+    class Bird {
+
+        double x, y;
+        double targetX = 370;
+        double targetY = 150;
+
+        public Bird(double x, double y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public void update(int state, double time) {
+            double dx = targetX - this.x;
+            double dy = targetY - this.y;
+            double dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist > 5) {
+                double speed = 2;
+
+                if (state == 1) { //Windy
+                    speed = 0.8;
+                    this.y += Math.sin(time * 5) * 2;
+                    this.x -= 1.5;
+                }
+
+                this.x += (dx / dist) * speed;
+                this.y += (dy / dist) * speed;
+            } else {
+                if (state == 1 || state == 2) {
+                    this.y += Math.sin(time) * .5;
+                }
+            }
+
+            if (this.x < -100) {
+                this.x = -50;
+            }
         }
     }
 
@@ -62,6 +103,12 @@ public class TreeSimulator extends JPanel implements ActionListener {
             g2d.setColor(l.color);
             g2d.fillOval((int) l.x - 5, (int) l.y - 5, 10, 10);
         }
+
+        g2d.setColor(Color.BLACK);
+        g2d.setStroke(new BasicStroke(2));
+
+        g2d.drawLine((int) aiBird.x, (int) aiBird.y, (int) aiBird.x - 10, (int) aiBird.y - 10);
+        g2d.drawLine((int) aiBird.x, (int) aiBird.y, (int) aiBird.x + 10, (int) aiBird.y - 10);
 
         spawnLeaves = false;
     }
@@ -107,6 +154,8 @@ public class TreeSimulator extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         time += 0.05;
+
+        aiBird.update(currentState, time);
 
         for (Leaf l : fallingLeaves) {
             if (l.y < getHeight() - 55) {

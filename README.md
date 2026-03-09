@@ -20,6 +20,10 @@ A real-time interactive ecosystem simulation built from scratch in core Java (Sw
 - **Custom Particle System:** When autumn arrives, the tree calculates the exact endpoint of every branch, converts them into `Leaf` objects, and applies gravity and wind vectors to simulate realistic falling leaves piling up on the ground.
 - **60 FPS Rendering:** Smooth animation engine built without any external game libraries.
 
+* **Autonomous AI Agent (Ecosystem Interaction):**
+  - Implemented a goal-seeking autonomous bird agent using vector-based steering behaviors.
+  - The agent interacts with the environment's state machine: it smoothly flies to the top of the tree in calm weather, but struggles, slows down, and gets pushed back by the physics engine during windy conditions.
+
 ## 💻 How to Run
 
 1. Clone the repository and compile the Java file:
